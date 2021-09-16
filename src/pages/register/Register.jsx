@@ -1,38 +1,67 @@
-import axios from "axios";
 import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import Input from "../../component/input/Input";
 import { userProvider } from "../../user/User";
-
+import { registerUser } from "../../utils/functions";
 function Register() {
   const { setToken, setUser } = useContext(userProvider);
   const [register, setRegister] = useState({
-    name: "Daman kinra",
-    username: "xcls00",
-    email: "daman@gmail.com",
+    name: "",
+    username: "",
+    email: "",
     profileImageUrl: "",
-    password: "1234",
+    password: "",
+    projects: [],
+    requests: [],
   });
-  const handleRegister = async () => {
+  const handleRegister = async (e) => {
+    if (e) e.preventDefault();
     try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/register`,
-        {
-          ...register,
-        }
-      );
-      if (res.data.error) {
-        console.log(res.data.error);
-        return;
-      }
-      localStorage.setItem("token", res.data.token);
-      setToken(res.data.token);
-      setUser(res.data.user);
+      const res = await registerUser(register);
+      setToken(res.token);
+      setUser(res.user);
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <div>
-      <button onClick={handleRegister}>Register</button>
+      <form>
+        <Input
+          value={register.name}
+          type="text"
+          placeholder="Name"
+          onChange={(e) => {
+            setRegister((prev) => ({ ...prev, name: e.target.value }));
+          }}
+        />
+        <Input
+          value={register.username}
+          type="text"
+          placeholder="User Name"
+          onChange={(e) => {
+            setRegister((prev) => ({ ...prev, username: e.target.value }));
+          }}
+        />
+        <Input
+          value={register.email}
+          type="email"
+          placeholder="Email"
+          onChange={(e) => {
+            setRegister((prev) => ({ ...prev, email: e.target.value }));
+          }}
+        />
+        <Input
+          value={register.password}
+          type="password"
+          placeholder="Password"
+          onChange={(e) => {
+            setRegister((prev) => ({ ...prev, password: e.target.value }));
+          }}
+        />
+        <button onClick={handleRegister}>Register</button>
+        <Link to="/login">Login</Link>
+      </form>
     </div>
   );
 }

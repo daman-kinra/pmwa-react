@@ -10,7 +10,10 @@ import Project from "./pages/project/Project";
 import Register from "./pages/register/Register";
 import Tasks from "./pages/task/Tasks";
 function App() {
-  const { token } = useContext(userProvider);
+  const { token, user } = useContext(userProvider);
+  if (!user && token) {
+    return <h1>Loading....</h1>;
+  }
   if (token) {
     return (
       <>
@@ -19,7 +22,7 @@ function App() {
             <h1>Home</h1>
             <Landing />
           </Route>
-          <Route exact path="/home">
+          <Route exact path="/app">
             <Home />
           </Route>
           <Route exact path="/project/:id">
