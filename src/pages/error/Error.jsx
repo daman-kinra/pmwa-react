@@ -2,10 +2,10 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 
 function Error(props) {
-  if (props.user) {
+  if (props.token) {
     return <Redirect to="/" />;
   } else {
-    return <Redirect to="/" />;
+    return <Redirect to="/login" />;
   }
 }
 

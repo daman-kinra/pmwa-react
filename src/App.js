@@ -10,12 +10,13 @@ import Project from "./pages/project/Project";
 import Register from "./pages/register/Register";
 import Tasks from "./pages/task/Tasks";
 function App() {
-  const { user } = useContext(userProvider);
-  if (user) {
+  const { token } = useContext(userProvider);
+  if (token) {
     return (
       <>
         <Switch>
           <Route exact path="/">
+            <h1>Home</h1>
             <Landing />
           </Route>
           <Route exact path="/home">
@@ -31,7 +32,7 @@ function App() {
             <Profile />
           </Route>
           <Route exact>
-            <Error user={user} />
+            <Error token={token} />
           </Route>
         </Switch>
       </>
@@ -41,6 +42,7 @@ function App() {
       <>
         <Switch>
           <Route exact path="/">
+            <h1>Login</h1>
             <Landing />
           </Route>
           <Route exact path="/login">
@@ -50,7 +52,7 @@ function App() {
             <Register />
           </Route>
           <Route exact>
-            <Error user={user} />
+            <Error token={token} />
           </Route>
         </Switch>
       </>

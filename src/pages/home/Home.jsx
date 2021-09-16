@@ -2,15 +2,16 @@ import React, { useContext } from "react";
 import { userProvider } from "../../user/User";
 
 function Home() {
-  const { setUser } = useContext(userProvider);
+  const { setUser, setToken } = useContext(userProvider);
   return (
     <div>
       Home
       <button
         onClick={(e) => {
           e.preventDefault();
-          localStorage.removeItem("user");
+          localStorage.removeItem("token");
           setUser(null);
+          setToken(null);
         }}
       >
         Logout
